@@ -1,8 +1,5 @@
 import { Module } from '@nestjs/common';
-import {StudentsModule} from "./students/students.module";
 import {TypeOrmModule} from "@nestjs/typeorm";
-import {Student} from "./students/model/student.entity";
-import {Class} from "./classes/model/class.entity";
 import {CityEntity} from "./city/city.entity";
 import {PlaceModule} from "./place/place.module";
 import {CityModule} from "./city/city.module";
@@ -10,6 +7,11 @@ import {PlaceController} from "./place/place.controller";
 import {CityController} from "./city/city.controller";
 import {PlaceService} from "./place/place.service";
 import {CityService} from "./city/city.service";
+import {PlaceEntity} from "./place/place.entity";
+import {CommentEntity} from "./comment/comment.entity";
+import {TypeEntity} from "./type/type.entity";
+import {CommentModule} from "./comment/comment.module";
+import {TypeModule} from "./type/type.module";
 
 @Module({
   imports: [
@@ -23,12 +25,17 @@ import {CityService} from "./city/city.service";
       entities: [
 
         CityEntity,
+          PlaceEntity,
+          CommentEntity,
+          TypeEntity,
       ],
       synchronize: true,
     }),
 
     PlaceModule,
       CityModule,
+      CommentModule,
+      TypeModule
   ],
   controllers: [
       PlaceController,

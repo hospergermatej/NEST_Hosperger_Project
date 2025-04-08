@@ -4,26 +4,16 @@ import {PlaceEntity} from "../place/place.entity";
 
 
 @Entity()
-export class CityEntity {
+export class TypeEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    name: string;
-
-
-
+    type: string;
 
     @OneToMany(
-        type => PlaceEntity, p => p.City
-    ) Places : PlaceEntity[];
+        type => PlaceEntity, p => p.Type
 
-    constructor(name:string) {
-        this.name = name
-    }
+    ) Places : PlaceEntity[]
 
 }
-
-
-
-
