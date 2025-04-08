@@ -34,4 +34,10 @@ export class CommentEntity {
         this.username = username
         this.Place = place
     }
+
+
 }
+
+
+
+
