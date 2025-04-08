@@ -23,15 +23,15 @@ export class CityService {
        return this.cityEntityRepository.findOneBy({ id });
      }
 
-    createCity(dto: CreateCityDto): Promise<CityEntity> {
-       const city = new CityEntity();
-
-      // TODO
-        city.name = CreateCityDto.name
+    //createCity(dto: CreateCityDto): Promise<CityEntity> {
+      // const city = new CityEntity(name);
 
 
-     return this.cityEntityRepository.save(city);
-    }
+        //city.name = CreateCityDto.name
+
+
+     //return this.cityEntityRepository.save(city);
+    //}
 
     // delete(id: number): void {
     //   this.studentsRepository.delete(id);

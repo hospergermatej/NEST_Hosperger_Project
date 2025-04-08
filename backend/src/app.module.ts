@@ -38,12 +38,10 @@ import {TypeModule} from "./type/type.module";
       TypeModule
   ],
   controllers: [
-      PlaceController,
-      CityController,
+
   ],
   providers: [
-      PlaceService,
-      CityService
+
   ],
 })
 export class AppModule {}

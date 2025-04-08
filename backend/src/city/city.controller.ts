@@ -24,12 +24,12 @@ export class CityController {
        return this.cityService.getCitiesByID(id);
      }
 
-     @Post()
-     createCity(
-         @Body() CityDto: CreateCityDto
-        ): Promise<CityEntity> {
-      return this.cityService.createCity(CityDto);
-     }
+    // @Post()
+    // createCity(
+       //  @Body() CityDto: CreateCityDto
+      //  ): Promise<CityEntity> {
+      //return this.cityService.createCity(CityDto);
+     //}
 
 
 }
