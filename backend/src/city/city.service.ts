@@ -5,6 +5,9 @@ import {Repository} from "typeorm";
 import {CityEntity} from "./city.entity";
 import {CityController} from "./city.controller";
 import {CreateCityDto} from "./dto/create-city.dto";
+import {PlaceEntity} from "../place/place.entity";
+import {PlaceService} from "../place/place.service";
+import {PlaceController} from "../place/place.controller";
 
 @Injectable()
 export class CityService {
@@ -12,6 +15,8 @@ export class CityService {
     constructor(
         @InjectRepository(CityEntity)
         private cityEntityRepository: Repository<CityEntity>,
+        @InjectRepository(PlaceEntity)
+        private placeEntityRepository: Repository<PlaceEntity>
     ) {}
 
 
@@ -23,17 +28,16 @@ export class CityService {
        return this.cityEntityRepository.findOneBy({ id });
      }
 
-    //createCity(dto: CreateCityDto): Promise<CityEntity> {
-      // const city = new CityEntity(name);
 
+     async getPlacesByCity(id:number): Promise<PlaceEntity[]>{
+        const city = await this.cityEntityRepository.findOne({where:{id:id},relations:['Places']})
+         return city.Places
+     }
 
-        //city.name = CreateCityDto.name
+    async CreatePlace(id:number,place:PlaceEntity): Promise<PlaceEntity>{
+        const city = await this.cityEntityRepository.findOne({where:{id:id}})
+        const newPlace = new PlaceEntity(place.name,place.description,city,null)
+        return this.placeEntityRepository.save(newPlace)
+    }
 
-
-     //return this.cityEntityRepository.save(city);
-    //}
-
-    // delete(id: number): void {
-    //   this.studentsRepository.delete(id);
-    // }
 }

@@ -2,11 +2,10 @@ import {Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put} from '@ne
 
 import {CityService} from "./city.service";
 import {CityEntity} from "./city.entity";
-import {CreateCityDto} from "./dto/create-city.dto";
-import {UpdateCityDto} from "./dto/update-city.dto";
+import {PlaceEntity} from "../place/place.entity";
 
 
-@Controller('city')
+@Controller('cities')
 export class CityController {
     constructor(
         private readonly cityService: CityService
@@ -24,12 +23,20 @@ export class CityController {
        return this.cityService.getCitiesByID(id);
      }
 
-    // @Post()
-    // createCity(
-       //  @Body() CityDto: CreateCityDto
-      //  ): Promise<CityEntity> {
-      //return this.cityService.createCity(CityDto);
-     //}
+    @Get(':id/places')
+    getPlacesByCity(
+        @Param('id',ParseIntPipe) id: number
+    ): Promise<PlaceEntity[]>{
+        return this.cityService.getPlacesByCity(id)
+    }
+
+    @Post(':id/places')
+    CreatePlace(
+        @Param('id',ParseIntPipe) id: number,
+        @Body() place:PlaceEntity
+    ){
+        return this.cityService.CreatePlace(id,place)
+    }
 
 
 }

@@ -2,7 +2,7 @@ import {Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put} from '@ne
 import {CommentService} from "./comment.service";
 import {CommentEntity} from "./comment.entity";
 
-@Controller('comment')
+@Controller('comments')
 export class CommentController {
     constructor(
         private readonly commentService: CommentService

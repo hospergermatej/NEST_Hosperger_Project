@@ -18,17 +18,5 @@ export class CommentService {
 
 
 
-    // create(dto: CreateStudentDto): Promise<Student> {
-    //   const student = new Student();
-    //
-    //   // TODO
-    //
-    //   // student.class = dto.classId;
-    //
-    //   return this.studentsRepository.save(student);
-    // }
 
-    // delete(id: number): void {
-    //   this.studentsRepository.delete(id);
-    // }
 }

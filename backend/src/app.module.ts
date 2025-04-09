@@ -12,22 +12,25 @@ import {CommentEntity} from "./comment/comment.entity";
 import {TypeEntity} from "./type/type.entity";
 import {CommentModule} from "./comment/comment.module";
 import {TypeModule} from "./type/type.module";
+import {RatingEntity} from "./rating/rating.entity";
+import {RatingModule} from "./rating/rating.module";
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: 'mysqlstudenti.litv.sssvt.cz',
       port: 3306,
-      username: 'root',
-      password: '',
-      database: 'db_nest',
+      username: 'hospergermatej',
+      password: '123456',
+      database: '4a2_hospergermatej_db2',
       entities: [
 
         CityEntity,
           PlaceEntity,
           CommentEntity,
           TypeEntity,
+          RatingEntity
       ],
       synchronize: true,
     }),
@@ -35,7 +38,8 @@ import {TypeModule} from "./type/type.module";
     PlaceModule,
       CityModule,
       CommentModule,
-      TypeModule
+      TypeModule,
+      RatingModule
   ],
   controllers: [
 
