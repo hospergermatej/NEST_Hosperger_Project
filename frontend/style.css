@@ -89,7 +89,7 @@ header .podtext{
 .modalni{
     z-index: 1;
     position: fixed;
-    background-color: red;
+    background-color: white;
 
     width: 50%;
     height: 900px;
@@ -99,4 +99,8 @@ header .podtext{
 
 .disabled{
     display: none;
+}
+
+.komentar{
+    border: solid black 1px;
 }
