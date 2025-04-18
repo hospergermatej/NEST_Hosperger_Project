@@ -104,3 +104,7 @@ header .podtext{
 .komentar{
     border: solid black 1px;
 }
+
+.star_color{
+    color: yellow;
+}

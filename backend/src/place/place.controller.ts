@@ -3,7 +3,7 @@ import {PlaceService} from "./place.service";
 import {PlaceEntity} from "./place.entity";
 import {CityEntity} from "../city/city.entity";
 import {CommentEntity} from "../comment/comment.entity";
-import {RatingEntity} from "../rating/rating.entity";
+
 
 @Controller('place')
 export class PlaceController {
@@ -39,19 +39,38 @@ export class PlaceController {
         return this.placeService.createComment(id,comment);
     }
 
-    @Get(':id/rating')
-    getRatingsByPlace(
-        @Param('id',ParseIntPipe) id:number
-    ): Promise<RatingEntity[]>{
-        return this.placeService.getRatingsByPlace(id)
+
+    @Delete(':id')
+    deletePlace(
+        @Param('id',ParseIntPipe) id:number,
+
+    ){
+        return this.placeService.deletePlace(id)
     }
 
-    @Post(':id/rating')
-    createRating(
-        @Param('id',ParseIntPipe) id: number,
-        @Body() rating:RatingEntity
+    @Delete(':id/comments/:commentID')
+    deleteComment(
+        @Param('id',ParseIntPipe) id:number,
+        @Param('commentID',ParseIntPipe) commentID:number
     ){
-        return this.placeService.createRating(id,rating)
+        return this.placeService.deleteComments(id,commentID)
+    }
+
+    @Put(':id')
+    updatePlace(
+        @Param('id',ParseIntPipe) id:number,
+        @Body() place:PlaceEntity
+    ){
+        return this.placeService.updatePlace(id,place)
+    }
+
+    @Put(':id/rating/:rating')
+    updateRating(
+        @Param('id',ParseIntPipe) id:number,
+        @Param('rating',ParseIntPipe) rating:number
+
+    ){
+        return this.placeService.createRating(id, rating)
     }
 
 }

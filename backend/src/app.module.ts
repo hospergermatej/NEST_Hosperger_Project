@@ -12,8 +12,6 @@ import {CommentEntity} from "./comment/comment.entity";
 import {TypeEntity} from "./type/type.entity";
 import {CommentModule} from "./comment/comment.module";
 import {TypeModule} from "./type/type.module";
-import {RatingEntity} from "./rating/rating.entity";
-import {RatingModule} from "./rating/rating.module";
 
 @Module({
   imports: [
@@ -29,8 +27,8 @@ import {RatingModule} from "./rating/rating.module";
         CityEntity,
           PlaceEntity,
           CommentEntity,
-          TypeEntity,
-          RatingEntity
+          TypeEntity
+
       ],
       synchronize: true,
     }),
@@ -39,7 +37,7 @@ import {RatingModule} from "./rating/rating.module";
       CityModule,
       CommentModule,
       TypeModule,
-      RatingModule
+
   ],
   controllers: [
 

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>ExploreCity</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 <div class="vokno">
@@ -38,13 +39,18 @@
 
         <div class="tlacitka">
             <button CLASS="zavrit">ZAVŘÍT</button>
-            <button>edit</button>
-            <button>delete</button>
+            <button class="editButton">edit</button>
+            <button class="deleteButton">delete</button>
         </div>
     </div>
 
     <div class="rating">
-
+        <span class="star fa fa-star" id="1"></span>
+        <span class="star fa fa-star" id="2"></span>
+        <span class="star fa fa-star" id="3"></span>
+        <span class="star fa fa-star" id="4"></span>
+        <span class="star fa fa-star" id="5"></span>
+        <span class="ratingCount"></span>
     </div>
 
 
@@ -66,9 +72,9 @@
 
     <div class="komentar_form">
 
-        <input class="komentar_jmeno" type="text">
+        <input class="komentar_jmeno" type="text" placeholder="username">
 
-        <input class="komentar_content" type="text">
+        <input class="komentar_content" type="text" placeholder="content">
 
         <button class="odeslat">Odeslat</button>
 
@@ -79,10 +85,23 @@
 <div id="create_form" class="modalni disabled">
 
 
-    <input class="input_nazev" type="text" placeholder="asojkedf">
-    <input class="input_popis" type="text" placeholder="asojkedf">
+    <input class="input_nazev" type="text" placeholder="Name">
+    <input class="input_popis" type="text" placeholder="Description">
 
     <button class="vytvorit">VYTVOŘIT</button>
+    <button class="exitButton">ZAVŘÍT</button>
+
+
+</div>
+
+<div id="edit_form" class="modalni disabled">
+
+
+    <input class="edit_input_nazev" type="text" placeholder="Name">
+    <input class="edit_input_popis" type="text" placeholder="Description">
+
+    <button class="editSaveButton">EDIT</button>
+    <button class="exitSaveButton">ZAVŘÍT</button>
 
 
 </div>

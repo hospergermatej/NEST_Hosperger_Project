@@ -3,7 +3,7 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
 import {PlaceEntity} from "./place.entity";
 import {CommentEntity} from "../comment/comment.entity";
-import {RatingEntity} from "../rating/rating.entity";
+
 
 
 @Injectable()
@@ -14,8 +14,7 @@ export class PlaceService {
         private placeEntityRepository: Repository<PlaceEntity>,
          @InjectRepository(CommentEntity)
          private commentEntityRepository: Repository<CommentEntity>,
-         @InjectRepository(RatingEntity)
-         private ratingEntityRepository: Repository<RatingEntity>
+
     ) {}
 
 
@@ -38,15 +37,34 @@ export class PlaceService {
         return this.commentEntityRepository.save(newComment)
     }
 
-    async getRatingsByPlace(id:number): Promise <RatingEntity[]>{
-        const place = await this.placeEntityRepository.findOne({where:{id:id}, relations:['Rating']})
-        return place.Rating
+
+
+    async deletePlace(id:number){
+        const place = await this.placeEntityRepository.findOneBy({id})
+        const comments = await this.commentEntityRepository.find({where:{Place:place}})
+        comments.forEach(comment => {
+            this.commentEntityRepository.remove(comment)
+        })
+        return this.placeEntityRepository.remove(place)
     }
 
-    async createRating(id:number,rating:RatingEntity) : Promise <RatingEntity>{
-        const place = await this.placeEntityRepository.findOne({where:{id:id}, relations:['Rating']})
-        const newPlace = new RatingEntity(rating.score,place)
-        return this.ratingEntityRepository.save(newPlace)
+    async deleteComments(id:number,commentID: number){
+        const comment = await this.commentEntityRepository.findOneBy({id:commentID})
+        return this.commentEntityRepository.remove(comment)
+    }
+
+    async updatePlace(id:number, places:PlaceEntity){
+        const place = await this.placeEntityRepository.findOneBy({id})
+        place.name = places.name
+        place.description = places.description
+        return this.placeEntityRepository.save(place)
+    }
+
+    async createRating(id:number,ratings:number){
+        const place = await this.placeEntityRepository.findOneBy({id})
+        place.rating = place.rating + ratings
+        place.ratingCount = place.ratingCount + 1
+        return this.placeEntityRepository.save(place)
     }
 
 }

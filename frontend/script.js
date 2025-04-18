@@ -17,10 +17,60 @@ const formButton = document.querySelector(".vytvorit")
 const inputKomentarJmeno = document.querySelector(".komentar_jmeno")
 const inputKomentarCont = document.querySelector(".komentar_content")
 const odeslatButton = document.querySelector(".odeslat")
-
+const deleteButton = document.querySelector(".deleteButton")
+const editform = document.getElementById("edit_form")
+const editInputNazev = document.querySelector(".edit_input_nazev")
+const editInputPopis = document.querySelector(".edit_input_popis")
+const editButton = document.querySelector(".editButton")
+const editSaveButton = document.querySelector(".editSaveButton")
+const stars = document.querySelectorAll(".star")
+const ratingCount = document.querySelector(".ratingCount")
+const exitSaveButton = document.querySelector(".exitSaveButton")
+const exitButton= document.querySelector(".exitButton")
 
 let PlaceID;
 let CityID;
+
+
+function ShowComments(){
+
+    fetch("http://localhost:3000/place/" + PlaceID + "/comments")
+        .then(response => response.json())
+        .then(comments => {
+            comments.forEach(comment => {
+
+                const commentDiv = document.createElement("div")
+                komentare.appendChild(commentDiv)
+                commentDiv.classList.add("komentar")
+
+                const commentUserName = document.createElement("div")
+                commentUserName.innerHTML = "username: " + comment.username
+                commentDiv.appendChild(commentUserName)
+
+                const commentContent = document.createElement("div")
+                commentContent.innerHTML = "content: " +comment.content
+                commentDiv.appendChild(commentContent)
+
+                const commentCreated = document.createElement("div")
+                commentCreated.innerHTML = "created at: " + comment.createdAt
+                commentDiv.appendChild(commentCreated)
+
+                const deleteButtonComment = document.createElement("button")
+                deleteButtonComment.innerHTML = "DELETE"
+                commentDiv.appendChild(deleteButtonComment)
+
+
+                deleteButtonComment.addEventListener("click", async function(e){
+                    await fetch("http://localhost:3000/place/" + PlaceID + "/comments/" + comment.id ,{method:"DELETE"})
+
+                    komentare.innerHTML = ""
+
+                    ShowComments()
+                })
+
+            })
+        })
+}
 
 
 odeslatButton.addEventListener("click", async function (e) {
@@ -38,28 +88,7 @@ odeslatButton.addEventListener("click", async function (e) {
 
     komentare.innerHTML= ""
 
-    fetch("http://localhost:3000/place/" + PlaceID + "/comments")
-        .then(response => response.json())
-        .then(comments => {
-            comments.forEach(comment => {
-
-                const commentDiv = document.createElement("div")
-                komentare.appendChild(commentDiv)
-                commentDiv.classList.add("komentar")
-
-                const commentUserName = document.createElement("div")
-                commentUserName.innerHTML = comment.username
-                commentDiv.appendChild(commentUserName)
-
-                const commentContent = document.createElement("div")
-                commentContent.innerHTML = comment.content
-                commentDiv.appendChild(commentContent)
-
-                const commentCreated = document.createElement("div")
-                commentCreated.innerHTML = comment.createdAt
-                commentDiv.appendChild(commentCreated)
-            })
-        })
+    ShowComments()
 
     inputKomentarJmeno.value = ""
     inputKomentarCont.value = ""
@@ -106,6 +135,9 @@ function ShowCities(Cities){
 
     })
 
+exitButton.addEventListener("click",function (e){
+    createModalWindow.classList.add("disabled")
+})
 
 function ShowPlaces(Places){
 
@@ -128,7 +160,8 @@ function ShowPlaces(Places){
         namePlace.innerHTML = Place.name;
         divPlace.appendChild(namePlace)
 
-        divPlace.addEventListener("click", function (e){
+
+        divPlace.addEventListener("click", async function(e){
             modalWindow.classList.remove("disabled")
             fetch("http://localhost:3000/place/" + Place.id)
                 .then(response => response.json())
@@ -145,35 +178,34 @@ function ShowPlaces(Places){
                     foto.appendChild(imageModalPlace)
 
 
+
+
                 })
                 .catch(error => {console.error("CHYBA",error)})
 
-            fetch("http://localhost:3000/place/" + Place.id + "/comments")
+            await fetch("http://localhost:3000/place/" + Place.id)
                 .then(response => response.json())
-                .then(comments => {
-                    comments.forEach(comment => {
-
-                        const commentDiv = document.createElement("div")
-                        komentare.appendChild(commentDiv)
-                        commentDiv.classList.add("komentar")
-
-                        const commentUserName = document.createElement("div")
-                        commentUserName.innerHTML = comment.username
-                        commentDiv.appendChild(commentUserName)
-
-                        const commentContent = document.createElement("div")
-                        commentContent.innerHTML = comment.content
-                        commentDiv.appendChild(commentContent)
-
-                        const commentCreated = document.createElement("div")
-                        commentCreated.innerHTML = comment.createdAt
-                        commentDiv.appendChild(commentCreated)
-
-
-
+                .then(place => {
+                    ratingCount.innerHTML = "(" + place.ratingCount + ")"
+                    stars.forEach( star => {
+                        if (star.id <= Math.round(place.rating/place.ratingCount)){
+                            star.classList.add("star_color")
+                        }else{
+                            star.classList.remove("star_color")
+                        }
                     })
                 })
+
+
+
+
             PlaceID = Place.id
+
+            komentare.innerHTML = ""
+
+            ShowComments()
+
+
         })
 
 
@@ -182,6 +214,76 @@ function ShowPlaces(Places){
 
 
 }
+
+stars.forEach(star =>{
+    star.addEventListener("click", async function(e){
+        await fetch("http://localhost:3000/place/" + PlaceID + "/rating/" + star.id,
+            {method:"PUT"})
+        await fetch("http://localhost:3000/place/" + PlaceID)
+            .then(response => response.json())
+            .then(place => {
+                ratingCount.innerHTML = "(" + place.ratingCount + ")"
+                stars.forEach( star => {
+                    if (star.id <= Math.round(place.rating/place.ratingCount)){
+                        star.classList.add("star_color")
+                    }else{
+                        star.classList.remove("star_color")
+                    }
+                })
+            })
+    })
+})
+
+exitSaveButton.addEventListener("click", function (e){
+    editform.classList.add("disabled")
+})
+
+editButton.addEventListener("click",function (e){
+    editform.classList.remove("disabled")
+
+    fetch("http://localhost:3000/place/" + PlaceID)
+        .then(response => response.json())
+        .then(place => {
+            editInputNazev.value = place.name
+            editInputPopis.value = place.description
+        })
+
+
+
+})
+
+    editSaveButton.addEventListener("click", async function(e){
+        await fetch("http://localhost:3000/place/" + PlaceID,{
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },body:JSON.stringify({name:editInputNazev.value,description:editInputPopis.value})
+        })
+        editform.classList.add("disabled")
+
+        jmeno.innerHTML = editInputNazev.value
+        popis.innerHTML = editInputPopis.value
+
+                fetch("http://localhost:3000/cities/" +CityID + "/places")
+                    .then(response => response.json())
+                    .then(places => {
+                        ShowPlaces(places)
+                    })
+    })
+
+
+
+    deleteButton.addEventListener("click",async function (e){
+        await fetch("http://localhost:3000/place/" + PlaceID , {method:"DELETE"})
+
+        modalWindow.classList.add("disabled")
+
+        fetch("http://localhost:3000/cities/"+ CityID + "/places")
+            .then(response => response.json())
+            .then(places => {ShowPlaces(places)})
+            .catch(error => {console.error("CHYBA",error)})
+    })
+
 
 
 formButton.addEventListener("click", async function (e){
