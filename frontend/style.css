@@ -1,11 +1,22 @@
 body{
-    background: linear-gradient(to bottom ,black,gray);
+    background: linear-gradient(to bottom ,black,white);
     width: 100%;
     height: 100%;
+    font-family: "Poppins",sans-serif;
 }
 
+button{
+    background-color: white;
+    border: 1px solid black;
+}
+
+.vytvorit_misto{
+    margin-top: 10px;
+    height: 50px;
+    width: 70px;
+}
 header{
-    background-color: darkslategray;
+    background-color: grey;
     width: 100%;
     height: 100px;
     margin-bottom: 10px;
@@ -13,21 +24,99 @@ header{
 
 header .text{
     color: white;
-    font-size: 27px;
-    margin-left: 10px;
+    font-size: 30px;
+    margin-left: 15px;
 }
 
 header .podtext{
-    margin-left: 25px;
+    margin-left: 33px;
     color: white;
 }
 
+.jmeno{
+    font-size: 20px;
 
+}
+
+.modal_jmeno_tlacitka{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.tlacitka{
+    display: flex;
+    margin-top: 10px;
+    margin-right: 10px;
+    gap: 10px;
+    height: 30px;
+}
+
+.komentar_form{
+    margin-top: 10px;
+}
+
+.komentar_form input{
+    width: 150px;
+    height: 30px;
+}
+.komentar_form button{
+    width: 100px;
+    height: 30px;
+}
+
+#create_form .disabled{
+    display: block;
+    flex-direction: row;
+
+}
+.create_form{
+    display: flex;
+    gap: 20px;
+ }
+
+.create_content{
+    display: flex;
+    justify-content: space-between;
+}
+.create_content button{
+    height: 30px;
+    margin-right: 10px;
+    margin-top: 30px;
+}
+
+
+.edits_form{
+    display: flex;
+    gap: 20px;
+}
+
+.edit_content{
+    display: flex;
+    justify-content: space-between;
+}
+.edit_content button{
+    height: 30px;
+    margin-right: 10px;
+    margin-top: 30px;
+}
+
+.edit_input_popis{
+    height: 60px;
+    width: 150px;
+
+}
+
+
+
+.modal_jmeno_tlacitka, .modal_foto_popis, .komentare, .komentar_form, .rating{
+    margin-left: 10px;
+}
 
 .mesto{
     display: flex;
     flex-direction: column;
-    background: linear-gradient(to bottom right,gray 50%,lightgrey);
+    background: linear-gradient(to top right,gray 50%,lightgrey);
     border: solid black 1px;
     width: 100%;
     height: 100%;
@@ -60,12 +149,13 @@ header .podtext{
 
 .mesta_pamatky{
     display: grid;
-    background: radial-gradient(red,blue);
+    background: radial-gradient(black ,white);
     grid-template-columns: 1fr 1fr 1fr 1fr;
     margin-top: 25px;
     width: 99%;
     height: 100%;
     border: solid black 2px;
+    border-collapse: separate;
     gap: 10px;
     padding-bottom: 2%;
 }
@@ -107,4 +197,10 @@ header .podtext{
 
 .star_color{
     color: yellow;
+}
+
+.deleteButton{
+    background-color: red;
+    color: white;
+    border-color: black;
 }

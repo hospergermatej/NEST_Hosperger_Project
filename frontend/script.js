@@ -57,6 +57,7 @@ function ShowComments(){
 
                 const deleteButtonComment = document.createElement("button")
                 deleteButtonComment.innerHTML = "DELETE"
+                deleteButtonComment.style = "justify-content: flex-end; background-color: red; color: white; height: 30px;"
                 commentDiv.appendChild(deleteButtonComment)
 
 
@@ -130,6 +131,7 @@ function ShowCities(Cities){
 
             CityID = City.id
 
+            divPlaces.classList.remove("disabled")
         })
 
 
@@ -145,6 +147,7 @@ function ShowPlaces(Places){
 
 
     vytvorit_button.classList.remove("disabled")
+
 
     Places.forEach( Place =>{
         const divPlace = document.createElement("div")
@@ -172,7 +175,7 @@ function ShowPlaces(Places){
                     komentare.innerHTML = "";
 
                     jmeno.innerHTML = place.name
-                    popis.innerHTML = place.description
+                    popis.innerHTML = "popis města: " + place.description
                     const imageModalPlace = document.createElement("img")
                     imageModalPlace.src="klatovy.png";
                     foto.appendChild(imageModalPlace)
